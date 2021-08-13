@@ -17,7 +17,7 @@ class Ui_productmaster(object):
             host="localhost",
             user="root",
             password="root",
-            database="filedb"
+            database= "filedb"
             )
         self.cur= self.mydb.cursor()
         productmaster.setObjectName("productmaster")
