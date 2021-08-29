@@ -14,8 +14,8 @@ from mysql import connector
 from PyQt5.QtSql import *
 
 
-class Ui_SalesRegister(object):
-    def setupUi(self, SalesRegister):
+class Ui_Dialog(object):
+    def setupUi(self, Dialog):
         self.mydb = connector.connect(
         host="localhost",
         user="root",
@@ -23,35 +23,35 @@ class Ui_SalesRegister(object):
         database="filedb"
         )
         self.cur= self.mydb.cursor()
-        SalesRegister.setObjectName("SalesRegister")
-        SalesRegister.resize(1800, 850)
+        Dialog.setObjectName("Dialog")
+        Dialog.resize(1800, 850)
         font = QtGui.QFont()
         font.setPointSize(12)
-        SalesRegister.setFont(font)
-        self.show = QtWidgets.QPushButton(SalesRegister)
+        Dialog.setFont(font)
+        self.show = QtWidgets.QPushButton(Dialog)
         self.show.setGeometry(QtCore.QRect(30, 770, 120, 50))
         self.show.setObjectName("show")
-        self.close = QtWidgets.QPushButton(SalesRegister)
+        self.close = QtWidgets.QPushButton(Dialog)
         self.close.setGeometry(QtCore.QRect(1650, 770, 120, 50))
         self.close.setObjectName("close")
-        self.printw = QtWidgets.QPushButton(SalesRegister)
+        self.printw = QtWidgets.QPushButton(Dialog)
         self.printw.setGeometry(QtCore.QRect(180, 770, 120, 50))
         self.printw.setObjectName("printw")
-        self.start = QtWidgets.QLabel(SalesRegister)
+        self.start = QtWidgets.QLabel(Dialog)
         self.start.setGeometry(QtCore.QRect(40, 30, 100, 25))
         self.start.setObjectName("start")
-        self.startw = QtWidgets.QDateEdit(SalesRegister)
+        self.startw = QtWidgets.QDateEdit(Dialog)
         self.startw.setGeometry(QtCore.QRect(150, 30, 110, 25))
         self.startw.setObjectName("startw")
         self.startw.setDate(QDate.currentDate())
-        self.end = QtWidgets.QLabel(SalesRegister)
+        self.end = QtWidgets.QLabel(Dialog)
         self.end.setGeometry(QtCore.QRect(540, 30, 100, 25))
         self.end.setObjectName("end")
-        self.endw = QtWidgets.QDateEdit(SalesRegister)
+        self.endw = QtWidgets.QDateEdit(Dialog)
         self.endw.setGeometry(QtCore.QRect(650, 30, 110, 25))
         self.endw.setObjectName("endw")
         self.endw.setDate(QDate.currentDate())
-        self.tableWidget = QtWidgets.QTableWidget(SalesRegister)
+        self.tableWidget = QtWidgets.QTableWidget(Dialog)
         self.tableWidget.setGeometry(QtCore.QRect(10, 70, 1780, 680))
         self.tableWidget.setRowCount(1)
         self.tableWidget.setColumnCount(10)
@@ -110,14 +110,27 @@ class Ui_SalesRegister(object):
         self.tableWidget.horizontalHeader().setStretchLastSection(True)
         self.tableWidget.verticalHeader().setVisible(False)
 
-        self.retranslateUi(SalesRegister)
-        self.close.clicked.connect(SalesRegister.close)
+        self.retranslateUi(Dialog)
+        self.close.clicked.connect(Dialog.close)
         self.show.clicked.connect(self.whenShowed)
-        QtCore.QMetaObject.connectSlotsByName(SalesRegister)
+        QtCore.QMetaObject.connectSlotsByName(Dialog)
 
 
     def whenShowed(self):
-        self.cur.execute("""SELECT BillNo,dDt,PNm,GSTNo,Total,TotCGST,TotSGST,TotIGST,ExpAmt2,GTot FROM Bill_Master""")
+        startdate = self.startw.date().toPyDate()
+        enddate = self.endw.date().toPyDate()
+        self.cur.execute("""SELECT
+         BillNo,
+         dDt,
+         PNm,
+         GSTNo,
+         Total,
+         TotCGST,
+         TotSGST,
+         TotIGST,
+         ExpAmt2,
+         GTot FROM Bill_Master
+         WHERE dDt BETWEEN %s AND %s""",(startdate,enddate))
         a = self.cur.fetchall()
         self.tableWidget.setRowCount(0)
         for row_number, row_data in enumerate(a):
@@ -128,37 +141,37 @@ class Ui_SalesRegister(object):
         self.tableWidget.insertRow(row_number + 2)
         c = row_number + 2
         self.tableWidget.setItem(c,2,QtWidgets.QTableWidgetItem("TOTAL"))
-        self.cur.execute("""SELECT SUM(Total) AS totsum FROM Bill_Master""")
+        self.cur.execute("""SELECT SUM(Total) AS sum FROM Bill_Master WHERE dDt BETWEEN %s AND %s""",(startdate,enddate))
         result = self.cur.fetchall()
         for i in result:
             x = i[0]
             y = "{:.2f}".format(x)
         self.tableWidget.setItem(c,4,QtWidgets.QTableWidgetItem(str(y)))
-        self.cur.execute("""SELECT SUM(TotCGST) AS totsum FROM Bill_Master""")
+        self.cur.execute("""SELECT SUM(TotCGST) AS sum FROM Bill_Master WHERE dDt BETWEEN %s AND %s""",(startdate,enddate))
         result = self.cur.fetchall()
         for i in result:
             x = i[0]
             y = "{:.2f}".format(x)
         self.tableWidget.setItem(c,5,QtWidgets.QTableWidgetItem(str(y)))
-        self.cur.execute("""SELECT SUM(TotSGST) AS totsum FROM Bill_Master""")
+        self.cur.execute("""SELECT SUM(TotSGST) AS sum FROM Bill_Master WHERE dDt BETWEEN %s AND %s""",(startdate,enddate))
         result = self.cur.fetchall()
         for i in result:
             x = i[0]
             y = "{:.2f}".format(x)
         self.tableWidget.setItem(c,6,QtWidgets.QTableWidgetItem(str(y)))
-        self.cur.execute("""SELECT SUM(TotIGST) AS totsum FROM Bill_Master""")
+        self.cur.execute("""SELECT SUM(TotIGST) AS sum FROM Bill_Master WHERE dDt BETWEEN %s AND %s""",(startdate,enddate))
         result = self.cur.fetchall()
         for i in result:
             x = i[0]
             y = "{:.2f}".format(x)
         self.tableWidget.setItem(c,7,QtWidgets.QTableWidgetItem(str(y)))
-        self.cur.execute("""SELECT SUM(ExpAmt2) AS totsum FROM Bill_Master""")
+        self.cur.execute("""SELECT SUM(ExpAmt2) AS sum FROM Bill_Master WHERE dDt BETWEEN %s AND %s""",(startdate,enddate))
         result = self.cur.fetchall()
         for i in result:
             x = i[0]
             y = "{:.2f}".format(x)
         self.tableWidget.setItem(c,8,QtWidgets.QTableWidgetItem(str(y)))
-        self.cur.execute("""SELECT SUM(GTot) AS totsum FROM Bill_Master""")
+        self.cur.execute("""SELECT SUM(GTot) AS sum FROM Bill_Master WHERE dDt BETWEEN %s AND %s""",(startdate,enddate))
         result = self.cur.fetchall()
         for i in result:
             x = i[0]
@@ -166,34 +179,34 @@ class Ui_SalesRegister(object):
         self.tableWidget.setItem(c,9,QtWidgets.QTableWidgetItem(str(y)))
 
 
-    def retranslateUi(self, SalesRegister):
+    def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        SalesRegister.setWindowTitle(_translate("SalesRegister", "Dialog"))
-        self.close.setText(_translate("SalesRegister", "Close"))
-        self.show.setText(_translate("SalesRegister", "Show"))
-        self.printw.setText(_translate("SalesRegister", "Print"))
-        self.start.setText(_translate("SalesRegister", "Start Date"))
-        self.end.setText(_translate("SalesRegister", "End Date"))
+        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        self.close.setText(_translate("Dialog", "Close"))
+        self.show.setText(_translate("Dialog", "Show"))
+        self.printw.setText(_translate("Dialog", "Print"))
+        self.start.setText(_translate("Dialog", "Start Date"))
+        self.end.setText(_translate("Dialog", "End Date"))
         item = self.tableWidget.horizontalHeaderItem(0)
-        item.setText(_translate("SalesRegister", "Bill No."))
+        item.setText(_translate("Dialog", "Bill No."))
         item = self.tableWidget.horizontalHeaderItem(1)
-        item.setText(_translate("SalesRegister", "Date"))
+        item.setText(_translate("Dialog", "Date"))
         item = self.tableWidget.horizontalHeaderItem(2)
-        item.setText(_translate("SalesRegister", "Party"))
+        item.setText(_translate("Dialog", "Party"))
         item = self.tableWidget.horizontalHeaderItem(3)
-        item.setText(_translate("SalesRegister", "GSTIN"))
+        item.setText(_translate("Dialog", "GSTIN"))
         item = self.tableWidget.horizontalHeaderItem(4)
-        item.setText(_translate("SalesRegister", "Taxable Value"))
+        item.setText(_translate("Dialog", "Taxable Value"))
         item = self.tableWidget.horizontalHeaderItem(5)
-        item.setText(_translate("SalesRegister", "CGST"))
+        item.setText(_translate("Dialog", "CGST"))
         item = self.tableWidget.horizontalHeaderItem(6)
-        item.setText(_translate("SalesRegister", "SGST"))
+        item.setText(_translate("Dialog", "SGST"))
         item = self.tableWidget.horizontalHeaderItem(7)
-        item.setText(_translate("SalesRegister", "IGST"))
+        item.setText(_translate("Dialog", "IGST"))
         item = self.tableWidget.horizontalHeaderItem(8)
-        item.setText(_translate("SalesRegister", "Exp / RoundOff"))
+        item.setText(_translate("Dialog", "Exp / RoundOff"))
         item = self.tableWidget.horizontalHeaderItem(9)
-        item.setText(_translate("SalesRegister", "Grand Total"))
+        item.setText(_translate("Dialog", "Grand Total"))
         __sortingEnabled = self.tableWidget.isSortingEnabled()
         self.tableWidget.setSortingEnabled(False)
         self.tableWidget.setSortingEnabled(__sortingEnabled) 
@@ -202,9 +215,9 @@ class Ui_SalesRegister(object):
 if __name__ == "__main__":
     import sys 
     app = QtWidgets.QApplication(sys.argv)
-    SalesRegister = QtWidgets.QDialog()
-    ui = Ui_SalesRegister()
-    ui.setupUi(SalesRegister)
-    SalesRegister.show()
+    Dialog = QtWidgets.QDialog()
+    ui = Ui_Dialog()
+    ui.setupUi(Dialog)
+    Dialog.show()
     sys.exit(app.exec_())
 
