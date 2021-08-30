@@ -197,6 +197,7 @@ class Ui_Dialog(object):
         self.parties.activated.connect(self.btEnable)
         self.save.clicked.connect(self.whenSaved)
         self.update.clicked.connect(self.whenUpDated)
+        self.del2.clicked.connect(self.whenDeleted)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
@@ -264,6 +265,27 @@ class Ui_Dialog(object):
             self.del2.setEnabled(False)
 
 
+    def whenDeleted(self):
+        a = self.pnmw.text()
+        self.cur.execute("""SELECT Nm FROM party""")
+        b = self.cur.fetchall()
+        c = 0
+        for x in b:
+            if a == b:
+                c = c + 1
+        if c == 0:
+                self.er = QtWidgets.QDialog()
+                self.ui=error.Ui_Dialog()
+                self.ui.setupUi(self.er)
+                self.er.show()
+        else:
+            self.cur.execute("""DELETE FROM party WHERE Nm = %s""",(a,))
+            self.mydb.commit()
+            self.ud = QtWidgets.QDialog()
+            self.ui=updated.Ui_Dialog()
+            self.ui.setupUi(self.ud)
+            self.ud.show()
+
     def whenAdded(self):
         self.save.setEnabled(True)
         self.parties.hide()
@@ -285,7 +307,6 @@ class Ui_Dialog(object):
         self.pnmw.setText("")
         self.stationw.setText("")
         self.adrsw.setText("")
-        #self.statew.setText("")
         self.codew.setText("")
         self.gstw.setText("")
         self.postw.setText("")
@@ -306,7 +327,6 @@ class Ui_Dialog(object):
         self.pnmw.setText("")
         self.stationw.setText("")
         self.adrsw.setText("") 
-        #self.statew.setCurrentIndex(0)
         self.codew.setText("")
         self.gstw.setText("")
         self.postw.setText("")
