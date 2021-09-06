@@ -10,6 +10,8 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from mysql import connector
+import updated,error
+
 
 class Ui_productmaster(object):
     def setupUi(self, productmaster):
@@ -122,7 +124,7 @@ class Ui_productmaster(object):
         self.tableWidget.horizontalHeader().setMinimumSectionSize(30)
         self.tableWidget.horizontalHeader().setStretchLastSection(True)
         self.tableWidget.verticalHeader().setVisible(False)
-        self.cur.execute("""SELECT * FROM product""")
+        self.cur.execute("""SELECT Nm,HSNCode,UnitNm,SellRate,IGST,SGST,CGST FROM product""")
         a = self.cur.fetchall()
         self.tableWidget.setRowCount(0)
         row_number=0
@@ -173,6 +175,7 @@ class Ui_productmaster(object):
         self.refresh.clicked.connect(self.whenRefreshed)
         self.add.clicked.connect(self.whenadd)
         self.save.clicked.connect(self.whenSaved)
+        self.prdctw.activated.connect(self.btEnable)
         self.dlt.clicked.connect(self.whenDelete)
         QtCore.QMetaObject.connectSlotsByName(productmaster)
 
@@ -216,7 +219,27 @@ class Ui_productmaster(object):
         self.add.setEnabled(False)
         self.update.setEnabled(False)
         self.dlt.setEnabled(False)
-
+        a = self.prdctw.currentText()
+        self.cur.execute("""SELECT Nm FROM product""")
+        b = self.cur.fetchall()
+        print (b)
+        c = 0
+        for x in b:
+            d = x[0]
+            if a == d:
+                c = c + 1
+        if c == 0:
+                self.er = QtWidgets.QDialog()
+                self.ui=error.Ui_Dialog()
+                self.ui.setupUi(self.er)
+                self.er.show()
+        else:
+            self.cur.execute("""DELETE FROM party WHERE Nm = %s""",(a,))
+            self.mydb.commit()
+            self.ud = QtWidgets.QDialog()
+            self.ui=updated.Ui_Dialog()
+            self.ui.setupUi(self.ud)
+            self.ud.show()
 
     def whenUpdate(self):
         self.add.setEnabled(False)
@@ -249,6 +272,29 @@ class Ui_productmaster(object):
         self.cgstw.setEnabled(False)
         self.igst.setEnabled(False)
         self.igstw.setEnabled(False)
+
+
+    def btEnable(self):
+        if len(self.prdctw.currentText())>0:
+            x=self.prdctw.currentText()
+            print(x)
+            self.update.setEnabled(True)
+            self.dlt.setEnabled(True)
+            self.cur.execute("Select * from product where Nm = %s",(x,))
+            myresult= self.cur.fetchone()
+            print(myresult)
+            if myresult is not None:
+                self.pnmw.setText(myresult[1])
+                self.hsnw.setText(myresult[2])
+                self.unitw.setText(myresult[3]) 
+                self.slrw.setText(str(myresult[4]))
+                self.igstw.setText(str(myresult[5]))
+                self.sgstw.setText(str(myresult[6]))
+                self.cgstw.setText(str(myresult[7]))
+            else :
+                self.update.setEnabled(False)
+                self.dlt.setEnabled(False)
+
 
     def whenSaved(self):
         self.prdct.hide()

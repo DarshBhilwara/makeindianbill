@@ -334,12 +334,11 @@ class Ui_Dialog(object):
     def btEnable(self):
         if len(self.parties.currentText())>0:
             x=self.parties.currentText()
-            print(x)
             self.update.setEnabled(True)
             self.del2.setEnabled(True)
             self.cur.execute("Select * from party where Nm = %s",(x,))
             myresult= self.cur.fetchone()
-            print(myresult)
+
             if myresult is not None:
                 self.pnmw.setText(myresult[1])
                 self.stationw.setText(myresult[2])
@@ -354,20 +353,21 @@ class Ui_Dialog(object):
                 self.pnow.setText(myresult[11])
                 self.emailw.setText(myresult[12])
                 self.transportw.setText(myresult[13])
-                
-            
+            else:
+                print("")
         else :
             self.update.setEnabled(False)
             self.del2.setEnabled(False)
 
 
     def whenDeleted(self):
-        a = self.pnmw.text()
+        a = self.parties.currentText()
         self.cur.execute("""SELECT Nm FROM party""")
         b = self.cur.fetchall()
         c = 0
         for x in b:
-            if a == b:
+            d = x[0]
+            if a == d:
                 c = c + 1
         if c == 0:
                 self.er = QtWidgets.QDialog()
@@ -479,7 +479,7 @@ class Ui_Dialog(object):
         pnow1 = self.pnow.text()
         emailw1 = self.emailw.text()
         transportw1= self.transportw.text()
-        #tdw1 = float(int(self.tdw.text()))
+        
         if self.glo == 0:
             if pnmw1 is None or stationw1 is None or adrsw1 is None or codew1 is None or gstw1 is None or postw1 is None or agentw1 is None or mnow1 is None or cpnw1 is None or pnow1 is None or emailw1 is None or transportw1 is None :
                 self.er = QtWidgets.QDialog()
@@ -489,7 +489,6 @@ class Ui_Dialog(object):
             elif pnmw1 is not None and stationw1 is not None and adrsw1 is not None and codew1 is not None and gstw1 is not None and postw1 is not None and agentw1 is not None and mnow1 is not None and cpnw1 is not None and pnow1 is not None and emailw1 is not None and transportw1 is not None:
                 self.cur.execute("""Insert into party (Nm,City,Address,PState,StateCode,GSTNo,PostalAddress,Agent,ContactPerson,MoNo,PhNo,Email,Transport) Values(%s,%s,%s,%s, %s,%s,%s,%s, %s,%s,%s,%s, %s)""",(pnmw1,stationw1,adrsw1,statew1,codew1,gstw1,postw1,agentw1,cpnw1,mnow1,pnow1,emailw1,transportw1))
                 self.mydb.commit()
-                print(self.cur.rowcount, "was inserted.")
                 if self.cur.rowcount>0:
                     self.ud = QtWidgets.QDialog()
                     self.ui=updated.Ui_Dialog()
@@ -514,7 +513,6 @@ class Ui_Dialog(object):
         self.pnmw.setText("")
         self.stationw.setText("")
         self.adrsw.setText("")
-        #self.statew.setText("")
         self.codew.setText("")
         self.gstw.setText("")
         self.postw.setText("")
@@ -528,6 +526,41 @@ class Ui_Dialog(object):
         self.statew.setCurrentText("")
         self.parties.setCurrentText("")
 
+        self.parties.show()        
+        self.add.setEnabled(False)    
+        self.update.setEnabled(False)
+        self.del2.setEnabled(False)
+        self.save.setEnabled(False)
+        self.refresh.setEnabled(False)
+        self.party.setEnabled(False)
+        self.pnmw.setEnabled(False)
+        self.pnm.setEnabled(False)
+        self.station.setEnabled(False)
+        self.stationw.setEnabled(False)
+        self.adrs.setEnabled(False)
+        self.adrsw.setEnabled(False)
+        self.state.setEnabled(False)
+        self.code.setEnabled(False)
+        self.statew.setEnabled(False)
+        self.codew.setEnabled(False)
+        self.gstw.setEnabled(False)
+        self.gst.setEnabled(False)
+        self.postw.setEnabled(False)
+        self.post.setEnabled(False)
+        self.agent.setEnabled(False)
+        self.agentw.setEnabled(False)
+        self.cpn.setEnabled(False)
+        self.cpnw.setEnabled(False)
+        self.mno.setEnabled(False)
+        self.mnow.setEnabled(False)
+        self.pno.setEnabled(False)
+        self.pnow.setEnabled(False)
+        self.email.setEnabled(False)
+        self.emailw.setEnabled(False)
+        self.transport.setEnabled(False)
+        self.transportw.setEnabled(False)
+        self.td.setEnabled(False)
+        self.tdw.setEnabled(False)
 
     def whenUpDated(self):
         self.glo = 1

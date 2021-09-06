@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: filedb
 -- ------------------------------------------------------
--- Server version	8.0.21
+-- Server version	5.7.31-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -23,13 +23,13 @@ DROP TABLE IF EXISTS `amount_receive`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `amount_receive` (
-  `VNo` int DEFAULT NULL,
-  `CNo` int DEFAULT NULL,
-  `dDt` date DEFAULT NULL,
+  `VNo` int(11) DEFAULT NULL,
+  `CNo` int(11) DEFAULT NULL,
+  `dDt` datetime DEFAULT NULL,
   `Amt` double DEFAULT NULL,
   `Rem` varchar(250) DEFAULT NULL,
-  `IsAdjust` int DEFAULT NULL,
-  `EDt` date DEFAULT NULL
+  `IsAdjust` int(11) DEFAULT NULL,
+  `EDt` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -50,9 +50,9 @@ DROP TABLE IF EXISTS `amount_receive_detail`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `amount_receive_detail` (
-  `VNo` int DEFAULT NULL,
-  `SNo` int DEFAULT NULL,
-  `Bill` int DEFAULT NULL
+  `VNo` int(11) DEFAULT NULL,
+  `SNo` int(11) DEFAULT NULL,
+  `Bill` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -73,8 +73,8 @@ DROP TABLE IF EXISTS `bill_detail`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `bill_detail` (
-  `VNo` int DEFAULT NULL,
-  `SrNo` int DEFAULT NULL,
+  `VNo` int(11) DEFAULT NULL,
+  `SrNo` int(11) DEFAULT NULL,
   `PNm` varchar(250) DEFAULT NULL,
   `HSNCode` varchar(250) DEFAULT NULL,
   `GSTPer` double DEFAULT NULL,
@@ -108,10 +108,10 @@ DROP TABLE IF EXISTS `bill_master`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `bill_master` (
-  `VNo` int DEFAULT NULL,
-  `BillNo` int DEFAULT NULL,
+  `VNo` int(11) DEFAULT NULL,
+  `BillNo` int(11) DEFAULT NULL,
   `dDt` date DEFAULT NULL,
-  `PNo` int DEFAULT NULL,
+  `PNo` int(11) DEFAULT NULL,
   `PNm` varchar(250) DEFAULT NULL,
   `Address` varchar(250) DEFAULT NULL,
   `StateNm` varchar(250) DEFAULT NULL,
@@ -142,7 +142,7 @@ CREATE TABLE `bill_master` (
   `ExpNm2` varchar(250) DEFAULT NULL,
   `ExpAmt2` double DEFAULT NULL,
   `GTot` double DEFAULT NULL,
-  `EDt` date DEFAULT NULL,
+  `EDt` datetime DEFAULT NULL,
   `ESugam` varchar(250) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -153,7 +153,7 @@ CREATE TABLE `bill_master` (
 
 LOCK TABLES `bill_master` WRITE;
 /*!40000 ALTER TABLE `bill_master` DISABLE KEYS */;
-INSERT INTO `bill_master` VALUES (1,1,'2020-06-06',0,'Tip Top Fancy','Peoples Buildings,Rice Bazar\r\nKunnalkulam','Kerala','32','32AVBPB9259L1ZH','','','-  -','','','','-  -','SRB','','TT/5','','',19800,0,19800,0,0,2376,2376,22176,'',0,'Round Off',0,22176,'2020-06-06',''),(2,2,'2020-06-09',0,'Kuttapai & Sons','Disco Bazar, Jews Street,\r\nErnakulam\r\n','Kerala','32','32ADDPI3295B1Z2','','','-  -','','','','-  -','SRB','','KS/5','','',19800,0,19800,0,0,2376,2376,22176,'',0,'Round Off',0,22176,'2020-06-09',''),(3,3,'2020-06-09',0,'Madan Gift Toys & Crockery','Jayanti Building,\r\nG.H. Road,Calicut','Kerala','32','32AQOPM1059K1ZN','','','-  -','','','','-  -','SRB','','MG/5','','',19800,0,19800,0,0,2376,2376,22176,'',0,'Round Off',0,22176,'2020-06-09',''),(4,4,'2020-06-10',0,'Madan Gift Toys & Crockery','Jayanti Building,\r\nG.H. Road,Calicut','Kerala','32','32AQOPM1059K1ZN','','','-  -','','','','-  -','SRB','','MG/5','','',19800,0,19800,0,0,2376,2376,22176,'',0,'Round Off',0,22176,'2020-06-10',''),(5,5,'2020-06-12',0,'Madan Gift Toys & Crockery','Jayanti Building,\r\nG.H. Road,Calicut','Kerala','32','32AQOPM1059K1ZN','','','-  -','','','','-  -','SRB','','MG/10','','',39600,0,39600,0,0,4752,4752,44352,'',0,'Round Off',0,44352,'2020-06-12',''),(6,6,'2020-06-15',0,'Ranjeet Toy Industries','Dhopra Road,Gandhi Marg\r\nRailway Road,\r\nAligarh','Uttar Pradesh','09','09AYNPA2702Q1ZS','','','-  -','','','','-  -','','','RI/7','','',27720,0,27720,1663.2,1663.2,0,3326.4,31046.4,'',0,'Round Off',-0.4,31046,'2020-06-15',''),(7,15,'2020-06-25',0,'L.N.M. Enterprises','\r\n985,Chhaini Market,\r\nSadar Bazar,\r\nDelhi-6\r\n','Delhi','07','07AADFLAA26E1ZA','','','-  -','','','','-  -','D.A.T.','','LM/2','','',7200,0,7200,0,0,864,864,8064,'',0,'Round Off',0,8064,'2020-06-25',''),(8,8,'2020-06-18',0,'Dinesh Toy Industries','Gular Road ,Gali No.7 ,Aligarh\r\n','Uttar Pradesh','09','09AJVPK2804Q1ZE','','','- - --','','','','- - --','','','','','',42840,0,42840,2570.4,2570.4,0,5140.8,47980.8,'',0,'Round Off',0.2,47981,'2020-06-27',''),(9,7,'2020-06-16',0,'King Toy Industries','\r\n12/24 Bania Para ,Aligarh\r\n','Uttar Pradesh','09','09CQZPK8494B1ZZ','','','-  -','','','','-  -','','','','','',42840,0,42840,2570.4,2570.4,0,5140.8,47980.8,'',0,'Round Off',0.2,47981,'2020-06-27',''),(10,9,'2020-06-19',0,'Dinesh Toy Industries','Gular Road ,Gali No.7 ,Aligarh\r\n','Uttar Pradesh','09','09AJVPK2804Q1ZE','','','-  -','','','','-  -','','','','','',41520,0,41520,2491.2,2491.2,0,4982.4,46502.4,'',0,'Round Off',-0.4,46502,'2020-06-27',''),(11,10,'2020-06-21',0,'King Toy Industries','\r\n12/24 Bania Para ,Aligarh\r\n','Uttar Pradesh','09','09CQZPK8494B1ZZ','','','-  -','','','','-  -','','','','','',39360,0,39360,2361.6,2361.6,0,4723.2,44083.2,'',0,'Round Off',-0.2,44083,'2020-06-27',''),(12,11,'2020-06-22',0,'King Toy Industries','\r\n12/24 Bania Para ,Aligarh\r\n','Uttar Pradesh','09','09CQZPK8494B1ZZ','','','-  -','','','','-  -','','','','','',40800,0,40800,2448,2448,0,4896,45696,'',0,'Round Off',0,45696,'2020-06-27',''),(13,12,'2020-06-22',0,'Dinesh Toy Industries','Gular Road ,Gali No.7 ,Aligarh\r\n','Uttar Pradesh','09','09AJVPK2804Q1ZE','','','-  -','','','','-  -','','','','','',40200,0,40200,2412,2412,0,4824,45024,'',0,'Round Off',0,45024,'2020-06-27',''),(14,13,'2020-06-23',0,'King Toy Industries','\r\n12/24 Bania Para ,Aligarh\r\n','Uttar Pradesh','09','09CQZPK8494B1ZZ','','','-  -','','','','-  -','','','','','',41520,0,41520,2491.2,2491.2,0,4982.4,46502.4,'',0,'Round Off',-0.4,46502,'2020-06-27',''),(15,14,'2020-06-24',0,'Dinesh Toy Industries','Gular Road ,Gali No.7 ,Aligarh\r\n','Uttar Pradesh','09','09AJVPK2804Q1ZE','','','-  -','','','','-  -','','','','','',40800,0,40800,2448,2448,0,4896,45696,'',0,'Round Off',0,45696,'2020-06-27',''),(16,16,'2020-06-26',0,'King Toy Industries','\r\n12/24 Bania Para ,Aligarh\r\n','Uttar Pradesh','09','09CQZPK8494B1ZZ','','','-  -','','','','-  -','','','','','',38160,0,38160,2289.6,2289.6,0,4579.2,42739.2,'',0,'Round Off',-0.2,42739,'2020-06-27',''),(17,17,'2020-06-27',0,'Dinesh Toy Industries','Gular Road ,Gali No.7 ,Aligarh\r\n','Uttar Pradesh','09','09AJVPK2804Q1ZE','','','-  -','','','','-  -','','','','','',38016,0,38016,2280.96,2280.96,0,4561.92,42577.92,'',0,'Round Off',0.08,42578,'2020-07-04',''),(18,18,'2020-06-27',0,'King Toy Industries','\r\n12/24 Bania Para ,Aligarh\r\n','Uttar Pradesh','09','09CQZPK8494B1ZZ','','','-  -','','','','-  -','','','','','',41184,0,41184,2471.04,2471.04,0,4942.08,46126.08,'',0,'Round Off',-0.08,46126,'2020-07-04',''),(19,19,'2020-06-28',0,'Dinesh Toy Industries','Gular Road ,Gali No.7 ,Aligarh\r\n','Uttar Pradesh','09','09AJVPK2804Q1ZE','','','-  -','','','','-  -','','','','','',41184,0,41184,2471.04,2471.04,0,4942.08,46126.08,'',0,'Round Off',-0.08,46126,'2020-07-04',''),(20,20,'2020-06-29',0,'King Toy Industries','\r\n12/24 Bania Para ,Aligarh\r\n','Uttar Pradesh','09','09CQZPK8494B1ZZ','','','-  -','','','','-  -','','','','','',38016,0,38016,2280.96,2280.96,0,4561.92,42577.92,'',0,'Round Off',0.08,42578,'2020-07-04',''),(21,21,'2020-06-29',0,'Dinesh Toy Industries','Gular Road ,Gali No.7 ,Aligarh\r\n','Uttar Pradesh','09','09AJVPK2804Q1ZE','','','-  -','','','','-  -','','','','','',31680,0,31680,1900.8,1900.8,0,3801.6,35481.6,'',0,'Round Off',0.4,35482,'2020-07-04',''),(22,22,'2020-06-30',0,'King Toy Industries','\r\n12/24 Bania Para ,Aligarh\r\n','Uttar Pradesh','09','09CQZPK8494B1ZZ','','10','-  -','','','','-  -','','','','','',31680,0,31680,1900.8,1900.8,0,3801.6,35481.6,'',0,'Round Off',0.4,35482,'2020-07-04','');
+INSERT INTO `bill_master` VALUES (1,1,'2020-06-06',0,'Tip Top Fancy','Peoples Buildings,Rice Bazar\r\nKunnalkulam','Kerala','32','32AVBPB9259L1ZH','','','-  -','','','','-  -','SRB','','TT/5','','',19800,0,19800,0,0,2376,2376,22176,'',0,'Round Off',0,22176,'2020-06-06 11:58:44',''),(2,2,'2020-06-09',0,'Kuttapai & Sons','Disco Bazar, Jews Street,\r\nErnakulam\r\n','Kerala','32','32ADDPI3295B1Z2','','','-  -','','','','-  -','SRB','','KS/5','','',19800,0,19800,0,0,2376,2376,22176,'',0,'Round Off',0,22176,'2020-06-09 11:32:02',''),(3,3,'2020-06-09',0,'Madan Gift Toys & Crockery','Jayanti Building,\r\nG.H. Road,Calicut','Kerala','32','32AQOPM1059K1ZN','','','-  -','','','','-  -','SRB','','MG/5','','',19800,0,19800,0,0,2376,2376,22176,'',0,'Round Off',0,22176,'2020-06-09 11:42:57',''),(4,4,'2020-06-10',0,'Madan Gift Toys & Crockery','Jayanti Building,\r\nG.H. Road,Calicut','Kerala','32','32AQOPM1059K1ZN','','','-  -','','','','-  -','SRB','','MG/5','','',19800,0,19800,0,0,2376,2376,22176,'',0,'Round Off',0,22176,'2020-06-10 12:41:41',''),(5,5,'2020-06-12',0,'Madan Gift Toys & Crockery','Jayanti Building,\r\nG.H. Road,Calicut','Kerala','32','32AQOPM1059K1ZN','','','-  -','','','','-  -','SRB','','MG/10','','',39600,0,39600,0,0,4752,4752,44352,'',0,'Round Off',0,44352,'2020-06-12 16:22:46',''),(6,6,'2020-06-15',0,'Ranjeet Toy Industries','Dhopra Road,Gandhi Marg\r\nRailway Road,\r\nAligarh','Uttar Pradesh','09','09AYNPA2702Q1ZS','','','-  -','','','','-  -','','','RI/7','','',27720,0,27720,1663.2,1663.2,0,3326.4,31046.4,'',0,'Round Off',-0.4,31046,'2020-06-15 10:46:01',''),(7,15,'2020-06-25',0,'L.N.M. Enterprises','\r\n985,Chhaini Market,\r\nSadar Bazar,\r\nDelhi-6\r\n','Delhi','07','07AADFLAA26E1ZA','','','-  -','','','','-  -','D.A.T.','','LM/2','','',7200,0,7200,0,0,864,864,8064,'',0,'Round Off',0,8064,'2020-06-25 17:01:59',''),(8,8,'2020-06-18',0,'Dinesh Toy Industries','Gular Road ,Gali No.7 ,Aligarh\r\n','Uttar Pradesh','09','09AJVPK2804Q1ZE','','','- - --','','','','- - --','','','','','',42840,0,42840,2570.4,2570.4,0,5140.8,47980.8,'',0,'Round Off',0.2,47981,'2020-06-27 10:24:32',''),(9,7,'2020-06-16',0,'King Toy Industries','\r\n12/24 Bania Para ,Aligarh\r\n','Uttar Pradesh','09','09CQZPK8494B1ZZ','','','-  -','','','','-  -','','','','','',42840,0,42840,2570.4,2570.4,0,5140.8,47980.8,'',0,'Round Off',0.2,47981,'2020-06-27 10:32:07',''),(10,9,'2020-06-19',0,'Dinesh Toy Industries','Gular Road ,Gali No.7 ,Aligarh\r\n','Uttar Pradesh','09','09AJVPK2804Q1ZE','','','-  -','','','','-  -','','','','','',41520,0,41520,2491.2,2491.2,0,4982.4,46502.4,'',0,'Round Off',-0.4,46502,'2020-06-27 10:36:00',''),(11,10,'2020-06-21',0,'King Toy Industries','\r\n12/24 Bania Para ,Aligarh\r\n','Uttar Pradesh','09','09CQZPK8494B1ZZ','','','-  -','','','','-  -','','','','','',39360,0,39360,2361.6,2361.6,0,4723.2,44083.2,'',0,'Round Off',-0.2,44083,'2020-06-27 10:40:03',''),(12,11,'2020-06-22',0,'King Toy Industries','\r\n12/24 Bania Para ,Aligarh\r\n','Uttar Pradesh','09','09CQZPK8494B1ZZ','','','-  -','','','','-  -','','','','','',40800,0,40800,2448,2448,0,4896,45696,'',0,'Round Off',0,45696,'2020-06-27 10:44:08',''),(13,12,'2020-06-22',0,'Dinesh Toy Industries','Gular Road ,Gali No.7 ,Aligarh\r\n','Uttar Pradesh','09','09AJVPK2804Q1ZE','','','-  -','','','','-  -','','','','','',40200,0,40200,2412,2412,0,4824,45024,'',0,'Round Off',0,45024,'2020-06-27 10:49:16',''),(14,13,'2020-06-23',0,'King Toy Industries','\r\n12/24 Bania Para ,Aligarh\r\n','Uttar Pradesh','09','09CQZPK8494B1ZZ','','','-  -','','','','-  -','','','','','',41520,0,41520,2491.2,2491.2,0,4982.4,46502.4,'',0,'Round Off',-0.4,46502,'2020-06-27 10:52:08',''),(15,14,'2020-06-24',0,'Dinesh Toy Industries','Gular Road ,Gali No.7 ,Aligarh\r\n','Uttar Pradesh','09','09AJVPK2804Q1ZE','','','-  -','','','','-  -','','','','','',40800,0,40800,2448,2448,0,4896,45696,'',0,'Round Off',0,45696,'2020-06-27 10:53:56',''),(16,16,'2020-06-26',0,'King Toy Industries','\r\n12/24 Bania Para ,Aligarh\r\n','Uttar Pradesh','09','09CQZPK8494B1ZZ','','','-  -','','','','-  -','','','','','',38160,0,38160,2289.6,2289.6,0,4579.2,42739.2,'',0,'Round Off',-0.2,42739,'2020-06-27 11:13:39',''),(17,17,'2020-06-27',0,'Dinesh Toy Industries','Gular Road ,Gali No.7 ,Aligarh\r\n','Uttar Pradesh','09','09AJVPK2804Q1ZE','','','-  -','','','','-  -','','','','','',38016,0,38016,2280.96,2280.96,0,4561.92,42577.92,'',0,'Round Off',0.08,42578,'2020-07-04 13:20:50',''),(18,18,'2020-06-27',0,'King Toy Industries','\r\n12/24 Bania Para ,Aligarh\r\n','Uttar Pradesh','09','09CQZPK8494B1ZZ','','','-  -','','','','-  -','','','','','',41184,0,41184,2471.04,2471.04,0,4942.08,46126.08,'',0,'Round Off',-0.08,46126,'2020-07-04 13:24:58',''),(19,19,'2020-06-28',0,'Dinesh Toy Industries','Gular Road ,Gali No.7 ,Aligarh\r\n','Uttar Pradesh','09','09AJVPK2804Q1ZE','','','-  -','','','','-  -','','','','','',41184,0,41184,2471.04,2471.04,0,4942.08,46126.08,'',0,'Round Off',-0.08,46126,'2020-07-04 13:27:40',''),(20,20,'2020-06-29',0,'King Toy Industries','\r\n12/24 Bania Para ,Aligarh\r\n','Uttar Pradesh','09','09CQZPK8494B1ZZ','','','-  -','','','','-  -','','','','','',38016,0,38016,2280.96,2280.96,0,4561.92,42577.92,'',0,'Round Off',0.08,42578,'2020-07-04 13:31:03',''),(21,21,'2020-06-29',0,'Dinesh Toy Industries','Gular Road ,Gali No.7 ,Aligarh\r\n','Uttar Pradesh','09','09AJVPK2804Q1ZE','','','-  -','','','','-  -','','','','','',31680,0,31680,1900.8,1900.8,0,3801.6,35481.6,'',0,'Round Off',0.4,35482,'2020-07-04 13:34:46',''),(22,22,'2020-06-30',0,'King Toy Industries','\r\n12/24 Bania Para ,Aligarh\r\n','Uttar Pradesh','09','09CQZPK8494B1ZZ','','10','-  -','','','','-  -','','','','','',31680,0,31680,1900.8,1900.8,0,3801.6,35481.6,'',0,'Round Off',0.4,35482,'2020-07-04 13:37:43','');
 /*!40000 ALTER TABLE `bill_master` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -165,7 +165,7 @@ DROP TABLE IF EXISTS `bill_tax`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `bill_tax` (
-  `VNo` int DEFAULT NULL,
+  `VNo` int(11) DEFAULT NULL,
   `HSNCode` varchar(250) DEFAULT NULL,
   `TVal` double DEFAULT NULL,
   `CGSTPer` double DEFAULT NULL,
@@ -195,7 +195,7 @@ DROP TABLE IF EXISTS `company`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `company` (
-  `CNo` int DEFAULT NULL,
+  `CNo` int(11) DEFAULT NULL,
   `Nm` varchar(250) DEFAULT NULL,
   `Address` varchar(250) DEFAULT NULL,
   `StateNm` varchar(250) DEFAULT NULL,
@@ -208,7 +208,7 @@ CREATE TABLE `company` (
   `BankDet1` varchar(250) DEFAULT NULL,
   `BankDet2` varchar(250) DEFAULT NULL,
   `BankDet3` varchar(250) DEFAULT NULL,
-  `ShowSerialNo` int DEFAULT NULL,
+  `ShowSerialNo` int(11) DEFAULT NULL,
   `BankNm` varchar(250) DEFAULT NULL,
   `Mo` varchar(250) DEFAULT NULL,
   `LeftMargin` double DEFAULT NULL
@@ -226,6 +226,30 @@ INSERT INTO `company` VALUES (1,'GURU JI INDUSTRIES','10/1575 Opposite Guru Gobi
 UNLOCK TABLES;
 
 --
+-- Table structure for table `mbl`
+--
+
+DROP TABLE IF EXISTS `mbl`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mbl` (
+  `bname` varchar(30) DEFAULT NULL,
+  `bauthor` varchar(30) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `bprice` decimal(10,0) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `mbl`
+--
+
+LOCK TABLES `mbl` WRITE;
+/*!40000 ALTER TABLE `mbl` DISABLE KEYS */;
+/*!40000 ALTER TABLE `mbl` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `party`
 --
 
@@ -233,7 +257,7 @@ DROP TABLE IF EXISTS `party`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `party` (
-  `PNo` int DEFAULT NULL,
+  `PNo` int(11) NOT NULL AUTO_INCREMENT,
   `Nm` varchar(250) DEFAULT NULL,
   `City` varchar(250) DEFAULT NULL,
   `Address` varchar(250) DEFAULT NULL,
@@ -247,8 +271,9 @@ CREATE TABLE `party` (
   `PhNo` varchar(250) DEFAULT NULL,
   `Email` varchar(250) DEFAULT NULL,
   `Transport` varchar(250) DEFAULT NULL,
-  `TD` double DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `TD` double DEFAULT NULL,
+  PRIMARY KEY (`PNo`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -257,6 +282,7 @@ CREATE TABLE `party` (
 
 LOCK TABLES `party` WRITE;
 /*!40000 ALTER TABLE `party` DISABLE KEYS */;
+INSERT INTO `party` VALUES (2,'one','two','three','Uttar Pradesh','09','123456werty','three','four','five','six','seven','eight@gmail.com','seven',NULL);
 /*!40000 ALTER TABLE `party` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -268,12 +294,12 @@ DROP TABLE IF EXISTS `product`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `product` (
-  `PNo` int DEFAULT NULL,
+  `PNo` int(11) DEFAULT NULL,
   `Nm` varchar(250) DEFAULT NULL,
   `HSNCode` varchar(250) DEFAULT NULL,
   `UnitNm` varchar(250) DEFAULT NULL,
   `SellRate` double DEFAULT NULL,
-  `IGST` int DEFAULT NULL,
+  `IGST` double DEFAULT NULL,
   `SGST` double DEFAULT NULL,
   `CGST` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -285,6 +311,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
+INSERT INTO `product` VALUES (1,'5 Star','','',0,0,0,0);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -296,8 +323,8 @@ DROP TABLE IF EXISTS `rate_list`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `rate_list` (
-  `GNo` int DEFAULT NULL,
-  `PNo` int DEFAULT NULL,
+  `GNo` int(11) DEFAULT NULL,
+  `PNo` int(11) DEFAULT NULL,
   `Finish` varchar(250) DEFAULT NULL,
   `PRate` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -320,7 +347,7 @@ DROP TABLE IF EXISTS `statename`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `statename` (
-  `SrNo` int DEFAULT NULL,
+  `SrNo` int(11) DEFAULT NULL,
   `Nm` varchar(250) DEFAULT NULL,
   `StateInitial` varchar(250) DEFAULT NULL,
   `StateCode` varchar(250) DEFAULT NULL,
@@ -371,7 +398,7 @@ DROP TABLE IF EXISTS `voucher_master`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `voucher_master` (
   `VNm` varchar(250) DEFAULT NULL,
-  `VType` int DEFAULT NULL
+  `VType` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -393,4 +420,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-08-29 18:00:57
+-- Dump completed on 2021-09-01  8:57:09
