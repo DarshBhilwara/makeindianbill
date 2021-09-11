@@ -9,18 +9,13 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from mysql import connector
+import sqlite3
 import updated,error
 
 
 class Ui_productmaster(object):
     def setupUi(self, productmaster):
-        self.mydb = connector.connect(
-            host="localhost",
-            user="root",
-            password="root",
-            database= "filedb"
-            )
+        self.mydb = sqlite3.connect('filedb.sqlite')
         self.cur= self.mydb.cursor()
         productmaster.setObjectName("productmaster")
         productmaster.resize(880, 630)
@@ -234,7 +229,7 @@ class Ui_productmaster(object):
                 self.ui.setupUi(self.er)
                 self.er.show()
         else:
-            self.cur.execute("""DELETE FROM party WHERE Nm = %s""",(a,))
+            self.cur.execute("""DELETE FROM party WHERE Nm = ?""",(a,))
             self.mydb.commit()
             self.ud = QtWidgets.QDialog()
             self.ui=updated.Ui_Dialog()
@@ -280,7 +275,7 @@ class Ui_productmaster(object):
             print(x)
             self.update.setEnabled(True)
             self.dlt.setEnabled(True)
-            self.cur.execute("Select * from product where Nm = %s",(x,))
+            self.cur.execute("Select * from product where Nm = ?",(x,))
             myresult= self.cur.fetchone()
             print(myresult)
             if myresult is not None:

@@ -9,17 +9,12 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from mysql import connector
-import nochng,updated,error
+import sqlite3
+import updated,error
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
-        self.mydb = connector.connect(
-        host="localhost",
-        user="root",
-        password="root",
-        database="filedb"
-        )
+        self.mydb = sqlite3.connect('filedb.sqlite')
         self.cur = self.mydb.cursor()
         Dialog.setObjectName("Dialog")
         Dialog.resize(700, 170)
@@ -65,7 +60,7 @@ class Ui_Dialog(object):
         self.cur.execute("SELECT * FROM company")
         myres = self.cur.fetchone()
         print(myres)
-        self.cur.execute("""UPDATE company SET Nm=%s WHERE Nm=%s""",(ncom,ocom))
+        self.cur.execute("""UPDATE company SET Nm=? WHERE Nm=?""",(ncom,ocom))
         self.mydb.commit()
         print(self.cur.rowcount)
         if self.cur.rowcount>0:

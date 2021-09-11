@@ -10,18 +10,13 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets,QtPrintSupport
 from PyQt5.QtCore import QDate
-from mysql import connector
+import sqlite3
 from PyQt5.QtSql import *
 import norecord
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
-        self.mydb = connector.connect(
-        host="localhost",
-        user="root",
-        password="root",
-        database="filedb"
-        )
+        self.mydb = sqlite3.connect('filedb.sqlite')
         self.cur= self.mydb.cursor()
         Dialog.setObjectName("Dialog")
         Dialog.resize(1800, 850)
@@ -161,7 +156,7 @@ class Ui_Dialog(object):
          TotIGST,
          ExpAmt2,
          GTot FROM Bill_Master
-         WHERE dDt BETWEEN %s AND %s""",(startdate,enddate))
+         WHERE dDt BETWEEN ? AND ?""",(startdate,enddate))
         a = self.cur.fetchall()
         b = []
         if a == b :
@@ -180,37 +175,37 @@ class Ui_Dialog(object):
             self.tableWidget.insertRow(row_number + 2)
             c = row_number + 2
             self.tableWidget.setItem(c,2,QtWidgets.QTableWidgetItem("TOTAL"))
-            self.cur.execute("""SELECT SUM(Total) AS sum FROM Bill_Master WHERE dDt BETWEEN %s AND %s""",(startdate,enddate))
+            self.cur.execute("""SELECT SUM(Total) AS sum FROM Bill_Master WHERE dDt BETWEEN ? AND ?""",(startdate,enddate))
             result = self.cur.fetchall()
             for i in result:
                 x = i[0]
                 y = "{:.2f}".format(x)
             self.tableWidget.setItem(c,4,QtWidgets.QTableWidgetItem(str(y)))
-            self.cur.execute("""SELECT SUM(TotCGST) AS sum FROM Bill_Master WHERE dDt BETWEEN %s AND %s""",(startdate,enddate))
+            self.cur.execute("""SELECT SUM(TotCGST) AS sum FROM Bill_Master WHERE dDt BETWEEN ? AND ?""",(startdate,enddate))
             result = self.cur.fetchall()
             for i in result:
                 x = i[0]
                 y = "{:.2f}".format(x)
             self.tableWidget.setItem(c,5,QtWidgets.QTableWidgetItem(str(y)))
-            self.cur.execute("""SELECT SUM(TotSGST) AS sum FROM Bill_Master WHERE dDt BETWEEN %s AND %s""",(startdate,enddate))
+            self.cur.execute("""SELECT SUM(TotSGST) AS sum FROM Bill_Master WHERE dDt BETWEEN ? AND ?""",(startdate,enddate))
             result = self.cur.fetchall()
             for i in result:
                 x = i[0]
                 y = "{:.2f}".format(x)
             self.tableWidget.setItem(c,6,QtWidgets.QTableWidgetItem(str(y)))
-            self.cur.execute("""SELECT SUM(TotIGST) AS sum FROM Bill_Master WHERE dDt BETWEEN %s AND %s""",(startdate,enddate))
+            self.cur.execute("""SELECT SUM(TotIGST) AS sum FROM Bill_Master WHERE dDt BETWEEN ? AND ?""",(startdate,enddate))
             result = self.cur.fetchall()
             for i in result:
                 x = i[0]
                 y = "{:.2f}".format(x)
             self.tableWidget.setItem(c,7,QtWidgets.QTableWidgetItem(str(y)))
-            self.cur.execute("""SELECT SUM(ExpAmt2) AS sum FROM Bill_Master WHERE dDt BETWEEN %s AND %s""",(startdate,enddate))
+            self.cur.execute("""SELECT SUM(ExpAmt2) AS sum FROM Bill_Master WHERE dDt BETWEEN ? AND ?""",(startdate,enddate))
             result = self.cur.fetchall()
             for i in result:
                 x = i[0]
                 y = "{:.2f}".format(x)
             self.tableWidget.setItem(c,8,QtWidgets.QTableWidgetItem(str(y)))
-            self.cur.execute("""SELECT SUM(GTot) AS sum FROM Bill_Master WHERE dDt BETWEEN %s AND %s""",(startdate,enddate))
+            self.cur.execute("""SELECT SUM(GTot) AS sum FROM Bill_Master WHERE dDt BETWEEN ? AND ?""",(startdate,enddate))
             result = self.cur.fetchall()
             for i in result:
                 x = i[0]

@@ -9,18 +9,13 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from mysql import connector
+import sqlite3
 import updated,error
 
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
-        self.mydb = connector.connect(
-            host="localhost",
-            user="root",
-            password="root",
-            database="filedb"
-            )
+        self.mydb = sqlite3.connect('filedb.sqlite')
         self.cur= self.mydb.cursor()
         Dialog.setObjectName("Dialog")
         Dialog.resize(1100, 650)
@@ -336,7 +331,7 @@ class Ui_Dialog(object):
             x=self.parties.currentText()
             self.update.setEnabled(True)
             self.del2.setEnabled(True)
-            self.cur.execute("Select * from party where Nm = %s",(x,))
+            self.cur.execute("Select * from party where Nm = ?",(x,))
             myresult= self.cur.fetchone()
 
             if myresult is not None:
@@ -375,7 +370,7 @@ class Ui_Dialog(object):
                 self.ui.setupUi(self.er)
                 self.er.show()
         else:
-            self.cur.execute("""DELETE FROM party WHERE Nm = %s""",(a,))
+            self.cur.execute("""DELETE FROM party WHERE Nm = ?""",(a,))
             self.mydb.commit()
             self.ud = QtWidgets.QDialog()
             self.ui=updated.Ui_Dialog()
@@ -487,7 +482,7 @@ class Ui_Dialog(object):
                 self.ui.setupUi(self.er)
                 self.er.show()
             elif pnmw1 is not None and stationw1 is not None and adrsw1 is not None and codew1 is not None and gstw1 is not None and postw1 is not None and agentw1 is not None and mnow1 is not None and cpnw1 is not None and pnow1 is not None and emailw1 is not None and transportw1 is not None:
-                self.cur.execute("""Insert into party (Nm,City,Address,PState,StateCode,GSTNo,PostalAddress,Agent,ContactPerson,MoNo,PhNo,Email,Transport) Values(%s,%s,%s,%s, %s,%s,%s,%s, %s,%s,%s,%s, %s)""",(pnmw1,stationw1,adrsw1,statew1,codew1,gstw1,postw1,agentw1,cpnw1,mnow1,pnow1,emailw1,transportw1))
+                self.cur.execute("""Insert into party (Nm,City,Address,PState,StateCode,GSTNo,PostalAddress,Agent,ContactPerson,MoNo,PhNo,Email,Transport) Values(?,?,?,?, ?,?,?,?, ?,?,?,?, ?)""",(pnmw1,stationw1,adrsw1,statew1,codew1,gstw1,postw1,agentw1,cpnw1,mnow1,pnow1,emailw1,transportw1))
                 self.mydb.commit()
                 if self.cur.rowcount>0:
                     self.ud = QtWidgets.QDialog()
@@ -502,7 +497,7 @@ class Ui_Dialog(object):
                 self.ui.setupUi(self.er)
                 self.er.show()
             elif pnmw1 is not None and stationw1 is not None and adrsw1 is not None and codew1 is not None and gstw1 is not None and postw1 is not None and agentw1 is not None and mnow1 is not None and cpnw1 is not None and pnow1 is not None and emailw1 is not None and transportw1 is not None:
-                self.cur.execute("""UPDATE party set City =%s,Address=%s,PState=%s,StateCode=%s,GSTNo=%s,PostalAddress=%s,Agent=%s,ContactPerson=%s,MoNo=%s,PhNo=%s,Email=%s,Transport=%s WHERE Nm=%s""",(stationw1,adrsw1,statew1,codew1,gstw1,postw1,agentw1,cpnw1,mnow1,pnow1,emailw1,transportw1,pnmw1))
+                self.cur.execute("""UPDATE party set City =?,Address=?,PState=?,StateCode=?,GSTNo=?,PostalAddress=?,Agent=?,ContactPerson=?,MoNo=?,PhNo=?,Email=?,Transport=? WHERE Nm=?""",(stationw1,adrsw1,statew1,codew1,gstw1,postw1,agentw1,cpnw1,mnow1,pnow1,emailw1,transportw1,pnmw1))
                 self.mydb.commit()
                 self.ud = QtWidgets.QDialog()
                 self.ui=updated.Ui_Dialog()

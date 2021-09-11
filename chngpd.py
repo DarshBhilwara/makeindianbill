@@ -9,24 +9,18 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from mysql import connector
+import sqlite3
 import updated,error
 
 class Ui_changepd(object):
     def setupUi(self, changepd):
-        self.mydb = connector.connect(
-        host="localhost",
-        user="root",
-        password="root",
-        database="filedb"
-        )
+        self.mydb = sqlite3.connect('filedb.sqlite')
         self.cur = self.mydb.cursor()
         changepd.setObjectName("changepd")
-        changepd.resize(529, 250)
+        changepd.resize(530, 250)
         font = QtGui.QFont()
         font.setPointSize(10)
-        changepd.setFont(font)
-        
+        changepd.setFont(font)      
         self.oldpd = QtWidgets.QLabel(changepd)
         self.oldpd.setGeometry(QtCore.QRect(30, 70, 170, 25))
         self.oldpd.setObjectName("oldpd")
@@ -69,7 +63,7 @@ class Ui_changepd(object):
         self.npd1 =self.newpd1w.text()
         self.npd2 =self.newpd2w.text()
         self.un = self.usernamew.text()
-        self.cur.execute("SELECT * FROM users where UserName=%s and Password=%s",(self.un,self.opd))
+        self.cur.execute("SELECT * FROM users where UserName=? and Password=?",(self.un,self.opd))
         myres = self.cur.fetchone()
         print (myres)
         if myres is None:
@@ -83,7 +77,7 @@ class Ui_changepd(object):
             self.newpd2w.clear()
         else:
             if self.npd1 == self.npd2:
-                self.cur.execute("""UPDATE users  SET Password=%s WHERE UserName=%s""",(self.npd1,self.un))
+                self.cur.execute("""UPDATE users  SET Password=? WHERE UserName=?""",(self.npd1,self.un))
                 self.mydb.commit()
                 if self.cur.rowcount>0 :
                     self.upd = QtWidgets.QDialog()

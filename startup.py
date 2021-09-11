@@ -9,19 +9,13 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
-import changecom,chngpd,compmstr,dbbms,invoice,partymstr,productmstr,salesregister,error
-from mysql import connector
+import sqlite3
+import dbbms,error
 
 
 class Ui_startup(object):
     def setupUi(self, startup):
-        self.mydb = connector.connect(
-        host="localhost",
-        user="root",
-        password="root",
-        database="filedb"
-        )
+        self.mydb = sqlite3.connect('filedb.sqlite')
         startup.setObjectName("startup")
         startup.resize(450, 250)
         self.unb = QtWidgets.QLabel(startup)
@@ -75,9 +69,8 @@ class Ui_startup(object):
         cur = self.mydb.cursor()
         unbwr=self.unbw.text()
         pwwr = self.pww.text()
-        cur.execute("SELECT * FROM users where UserName=%s and Password=%s", (unbwr,pwwr,))
+        cur.execute("SELECT * FROM users where UserName=? and Password=?", (unbwr,pwwr,))
         myresult = cur.fetchone()
-        #print(myresult)
         if myresult is None:
             self.err = QtWidgets.QDialog()
             self.ui=error.Ui_Dialog()
@@ -91,6 +84,7 @@ class Ui_startup(object):
             self.ui.setupUi(self.bms)
             startup.hide()
             self.bms.show()
+        cur.close()
         
             
     def retranslateUi(self, startup):
