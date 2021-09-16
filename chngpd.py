@@ -11,6 +11,9 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sqlite3
 import updated,error
+import qtmodern.styles
+import qtmodern.windows
+
 
 class Ui_changepd(object):
     def setupUi(self, changepd):
@@ -120,6 +123,8 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     changepd = QtWidgets.QDialog()
+    qtmodern.styles.dark(app)
+    changepd = qtmodern.windows.ModernWindow(changepd)
     ui = Ui_changepd()
     ui.setupUi(changepd)
     changepd.show()

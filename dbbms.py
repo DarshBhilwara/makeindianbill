@@ -9,6 +9,8 @@
 
 import changecom,chngpd,compmstr,invoice,partymstr,productmstr,salesregister,nochng,updated
 from PyQt5 import QtCore, QtGui, QtWidgets
+import qtmodern.styles
+import qtmodern.windows
 
 
 class Ui_MainWindow(object):
@@ -135,6 +137,8 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
+    qtmodern.styles.dark(app)
+    MainWindow = qtmodern.windows.ModernWindow(MainWindow)
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()

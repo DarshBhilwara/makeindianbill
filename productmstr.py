@@ -11,6 +11,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sqlite3
 import updated,error
+import qtmodern.styles
+import qtmodern.windows
 
 
 class Ui_productmaster(object):
@@ -340,6 +342,8 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     productmaster = QtWidgets.QDialog()
+    qtmodern.styles.dark(app)
+    productmaster = qtmodern.windows.ModernWindow(productmaster)
     ui = Ui_productmaster()
     ui.setupUi(productmaster)
     productmaster.show()

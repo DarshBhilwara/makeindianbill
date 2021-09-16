@@ -11,6 +11,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sqlite3
 import dbbms,error
+import qtmodern.styles
+import qtmodern.windows
 
 
 class Ui_startup(object):
@@ -100,6 +102,8 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)  
     startup = QtWidgets.QDialog()
+    qtmodern.styles.dark(app)
+    startup = qtmodern.windows.ModernWindow(startup)
     ui = Ui_startup()
     ui.setupUi(startup)
     startup.show()

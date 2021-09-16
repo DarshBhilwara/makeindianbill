@@ -10,6 +10,9 @@
 import sqlite3
 from PyQt5 import QtCore, QtGui, QtWidgets
 import nochng,updated
+import qtmodern.styles
+import qtmodern.windows
+
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -219,6 +222,8 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     Dialog = QtWidgets.QDialog()
+    qtmodern.styles.dark(app)
+    Dialog = qtmodern.windows.ModernWindow(Dialog)
     ui = Ui_Dialog()
     ui.setupUi(Dialog)
     Dialog.show()
